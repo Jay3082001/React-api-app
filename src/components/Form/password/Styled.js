@@ -5,7 +5,6 @@ export const Wrapper = styled.div`
   position: relative;
 `;
 
-//kjashdgsad dagsdytas dajhsdbsavd jdgtysafy
 export const StyledInput = styled(Input)`
   ${(props) =>
         props.variant === "usersPage" &&
