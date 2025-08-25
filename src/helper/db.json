@@ -23,6 +23,16 @@
       "username": "ritenthumar",
       "email": "riten@gmail.com",
       "password": "Riten@12345"
+    },
+    {
+      "id": 1756123689155,
+      "userName": "User 1",
+      "password": "User34567"
+    },
+    {
+      "id": 1756123758655,
+      "userName": "princethumar",
+      "password": "Prince12345"
     }
   ]
 }

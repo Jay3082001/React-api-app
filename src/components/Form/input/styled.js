@@ -33,5 +33,11 @@ export const StyledInput = styled.input`
         color: #535252;;
         font-size: 1.1rem;
       }
+
+      &:focus {
+        border-color: none;
+        box-shadow: none;
+        outline: none; 
+      }
     `}
 `;

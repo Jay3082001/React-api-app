@@ -82,6 +82,11 @@ const Navbar = ({ logoutAction, LogoutResponse }) => {
                 </NavLink>
               </li>
               <li>
+                <NavLink to="/container/authusers" className={({ isActive }) => (isActive ? "active" : "")}>
+                  AuthUsers
+                </NavLink>
+              </li>
+              <li>
                 <Button
                   type="button"
                   className="logout-link"

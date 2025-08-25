@@ -31,6 +31,12 @@ export const StyledInput = styled(Input)`
         color: #333;
         padding: 0;
 
+      &:focus {
+        border-color: none;
+        box-shadow: none;
+        outline: none; 
+      }  
+
       &::placeholder {
         font-weight: 500;
         color: #535252;;

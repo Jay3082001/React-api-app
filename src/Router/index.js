@@ -2,6 +2,7 @@ import { lazy, Suspense } from "react";
 import { Navigate, Route, Routes } from "react-router";
 import Spin from "../components/LoadingSpinner/Spin";
 import NotFound from "../pages/404page/NotFound";
+import AuthUsers from "../pages/AuthUsers/AuthUsers";
 
 // Lazy load all route components
 const Home = lazy(() => import("../pages/Home/Home"));
@@ -31,6 +32,7 @@ const PageRouter = () => {
         <Route path="author" element={<AuthorList />} />
         <Route path="books" element={<Books />} />
         <Route path="users" element={<UserList />} />
+        <Route path="authusers" element={<AuthUsers/>}/>
 
         <Route path="*" element={<NotFound />} /> 
       </Routes>

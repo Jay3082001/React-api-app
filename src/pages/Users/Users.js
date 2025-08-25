@@ -19,23 +19,12 @@ const UserList = ({ users = [], error, loadUsers, addUser, editUser, removeUser 
   const [initialLoading, setInitialLoading] = useState(true); // New state for initial load
   const [deleteState, setDeleteState] = useState({ target: null, deleting: false }); // merged deleteTarget + deleting
 
-  const pageSize = 10; 
-
-  // Load users on mount
-  // useEffect(() => {
-  //   loadUsers();
-  // }, [loadUsers]);
+  const pageSize = 10;
 
   useEffect(() => {
-    const fetchData = async () => {
-      setInitialLoading(true);
-      try {
-        await loadUsers();
-      } finally {
-        setInitialLoading(false);
-      }
-    };
-    fetchData();
+    setInitialLoading(true);
+    loadUsers()
+      .finally(() => setInitialLoading(false));
   }, [loadUsers]);
 
   // Filter + search
@@ -247,7 +236,22 @@ export default UserApproval(UserList);
 
 
 
+// Load users on mount
+  // useEffect(() => {
+  //   loadUsers();
+  // }, [loadUsers]);
 
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     setInitialLoading(true);
+  //     try {
+  //       await loadUsers();
+  //     } finally {
+  //       setInitialLoading(false);
+  //     }
+  //   };
+  //   fetchData();
+  // }, [loadUsers]);
 
 // import { useEffect, useState, useMemo, useCallback } from "react";
 // import "../Users/Users.scss";

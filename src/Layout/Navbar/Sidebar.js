@@ -38,6 +38,11 @@ const Sidebar = ({ toggleSidebar, handleLogout }) => {
             </NavLink>
           </li>
           <li>
+            <NavLink to="/container/authusers" onClick={toggleSidebar}>
+              AuthUsers
+            </NavLink>
+          </li>
+          <li>
              <Button
               type="button"
               className="logout-link"
