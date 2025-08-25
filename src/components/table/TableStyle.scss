@@ -1,0 +1,58 @@
+/* TABLE */
+.activity_list{
+
+  @media (max-width:516px) {
+    overflow-x: scroll;
+  }
+  
+  .activity-table {
+    width: 100%;
+    border-spacing: 0;
+    background: white;
+    border-radius: 12px; 
+    overflow: hidden;
+    box-shadow: 0 3px 14px rgba(0, 0, 0, 0.05);
+
+    th {
+      background: linear-gradient(#ae3712, #f35525);
+      padding: 1rem;
+      text-align: center;
+      font-weight: 600;
+      font-size: 0.95rem;
+      color: #fff;
+    }
+
+    td {
+      padding: 0.9rem;
+      font-size: 0.9rem;
+      text-align: center;
+      border-top: 1px solid #eee;
+    }
+
+    tbody tr:hover {
+      background: #f9fafb;
+    }
+
+    .actions {
+      display: flex;
+      justify-content: center; 
+      gap: 0.6rem;
+
+    //   button {
+    //     // border: none;
+    //     background: transparent;
+    //     color: #f35525;
+    //     font-size: 1rem;
+    //     // cursor: pointer;
+    //     padding: 0.4rem 0.6rem;
+    //     border: 1px solid #e99074;
+    //     // border-radius: 6px;
+    //     // transition: 0.2s;
+
+    //     &:hover {
+    //       background: rgba(246, 149, 59, 0.1);
+    //     }
+    //   }
+    }
+  }
+ } 

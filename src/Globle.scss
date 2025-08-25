@@ -1,0 +1,91 @@
+/* Import Font Style */
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
+
+/* Global Variables */
+$primary-font: 'Montserrat', sans-serif;
+$transition-speed: 0.3s;
+
+/* Global Styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  transition: all $transition-speed ease-in-out;
+}
+
+body {
+  font-family: $primary-font;
+}
+
+a {
+  text-decoration: none;
+}
+
+li {
+  list-style: none;
+}
+
+img {
+  width: 100%;
+  overflow: hidden;
+  padding-left: 55px;
+}
+
+
+/* Footer component styles */
+
+// variable media query
+$breakpoint-small: 868px;
+
+.footer {
+  text-align: center;
+  padding: 20px;
+  background-color: #1e1e1e;
+
+  h3 {
+    color: #cdcdcd;
+    padding: 20px;
+
+    @media (max-width: $breakpoint-small) {
+      font-size: 15px;
+    }
+  }
+}
+
+
+// Pages Title scss 
+
+// Variables
+// $white: #fff;
+// $dark-gray: #1e1e1e;
+
+// .contact_img {
+//   background-image: url('../src//assets//images/contact_dashboard/page-heading-bg.jpg');
+//   background-position: center bottom;
+//   background-repeat: no-repeat;
+//   background-size: cover;
+//   padding: 110px 0px;
+//   text-align: center;
+// }
+
+// .title {
+//   text-align: center;
+
+//   .title1 {
+//     background-color: $white;
+//     color: $dark-gray;
+//     font-size: 14px;
+//     font-weight: 500;
+//     text-transform: uppercase;
+//     padding: 10px 25px;
+//     display: inline-block;
+//     margin-bottom: 30px;
+//   }
+
+//   h3 {
+//     font-size: 48px;
+//     font-weight: 900;
+//     text-transform: uppercase;
+//     color: $white;
+//   }
+// }

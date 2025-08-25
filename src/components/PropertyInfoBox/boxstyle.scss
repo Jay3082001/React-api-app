@@ -1,0 +1,129 @@
+// Variables
+$primary-color: #f35525;
+$secondary-color: #1e1e1e;
+$light-grey: #fafafa;
+$dark-grey: #4a4a4a;
+$border-color: #eaeaea;
+$category-bg: #fbd9cf;
+$white: #fff;
+
+// Mixins
+@mixin button-style($bg-color, $text-color) {
+  display: inline-block;
+  background-color: $bg-color;
+  color: $text-color;
+  font-size: 14px;
+  font-weight: 500;
+  height: 40px;
+  line-height: 40px;
+  padding: 0px 30px;
+  border-radius: 25px;
+  transition: all 0.3s;
+
+  &:hover {
+    background-color: $primary-color;
+    color: $white;
+  }
+}
+
+.properties {
+  margin-bottom: 60px;
+  display: flex;
+  justify-content: center;
+
+  .properties_main {
+    width: 90%;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-wrap: wrap;
+
+    .properti_box {
+      width: 32%;
+      background-color: $light-grey;
+      border-radius: 10px;
+      padding: 30px;
+      margin-bottom: 30px;
+
+      img {
+        padding: 0;
+        width: 100%;
+        overflow: hidden;
+        border-radius: 10px;
+      }
+
+      .catagory {
+        background-color: $category-bg;
+        font-weight: 500;
+        border-radius: 5px;
+        font-size: 14px;
+        color: $secondary-color;
+        padding: 5px 12px;
+        display: inline-block;
+        margin-top: 25px;
+      }
+
+      h6 {
+        font-size: 20px;
+        color: $primary-color;
+        float: right;
+        margin-top: 30px;
+      }
+
+      h4 {
+        font-size: 19px;
+        margin: 25px 0px;
+      }
+
+      ul {
+        border-bottom: 1px solid $border-color;
+        margin-bottom: 30px;
+        padding-bottom: 30px;
+
+        li {
+          display: inline-block;
+          font-size: 15px;
+          color: $dark-grey;
+          margin-right: 20px;
+
+          span {
+            font-weight: 600;
+            color: $secondary-color;
+          }
+        }
+      }
+
+      .sch_btn {
+        text-align: center;
+
+        a {
+          @include button-style($secondary-color, $white);
+        }
+      }
+    }
+  }
+}
+
+// Media Queries
+@media (max-width: 868px) {
+  .properties_title_home {
+    width: 90%;
+  }
+
+  .properties_main {
+    justify-content: space-between;
+
+    .properti_box {
+      width: 47% !important;
+    }
+  }
+}
+
+@media (max-width: 568px) {
+  .properties_main {
+    .properti_box {
+      width: 100% !important;
+    }
+  }
+}
+

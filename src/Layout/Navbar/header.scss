@@ -1,0 +1,251 @@
+// Variables
+$primary-color: #1e1e1e;
+$secondary-color: #f35525;
+$light-text-color: #fafafa;
+$dark-text-color: #1e1e1e;
+$box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+
+$light-gray: #f0f0f0;
+$dark-gray: #1e1e1e;
+
+//NAVBAR
+.header-sticky {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000;
+  background-color: white;
+  box-shadow: $box-shadow;
+  transition: padding 0.3s ease-in-out;
+  display: flex;
+  justify-content: center;
+
+  .logo {
+    h1 {
+      line-height: 83px;
+    }
+  }
+
+  .nav{
+    li{
+      line-height: 83px;
+    }
+  }
+}
+
+.main_header {
+  display: flex;
+  justify-content: center;
+  background-color: white;
+  box-shadow: $box-shadow;
+}
+
+.main_container {
+  width: 90%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.logo {
+  h1 {
+    line-height: 100px;
+    font-size: 28px;
+    text-transform: uppercase;
+    color: $primary-color;
+    font-weight: 700;
+    letter-spacing: 2px;
+  }
+}
+
+.nav {
+  display: flex;
+  align-items: center;
+
+  li {
+    padding-left: 10px;
+    padding-right: 10px;
+    line-height: 100px;
+
+    a {
+      display: block;
+      padding: 0 20px;
+      font-weight: 500;
+      font-size: 15px;
+      height: 40px;
+      line-height: 40px;
+      text-transform: capitalize;
+      color: $dark-text-color;
+      border: transparent;
+      letter-spacing: 0.25px;
+
+      &:hover {
+        color: $secondary-color; 
+      }
+
+      &.active {
+        font-weight: bold;
+        color: $secondary-color;
+        border-bottom: 2px solid $secondary-color;
+      }
+    }
+
+    &:last-child {
+      .nav_link {
+        background-color: $primary-color;
+        color: #fff;
+        font-size: 14px;
+        font-weight: 400;
+        text-transform: none;
+        border-radius: 20px;
+        padding-left: 0;
+        display: flex;
+        align-items: center;
+
+        i {
+          background-color: $secondary-color;
+          display: inline-block;
+          width: 40px;
+          height: 40px;
+          text-align: center;
+          line-height: 40px;
+          margin-right: 10px;
+          border-radius: 50%;
+        }
+
+        &:hover {
+          color: $secondary-color;
+
+          i {
+            color: #fff;
+          }
+        }
+      }
+    }
+  }
+}
+
+/* Toggle Button (Hamburger) */
+.navbar-toggle {
+  display: none;
+  font-size: 22px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: $dark-text-color;
+}
+
+/* Mobile size */
+@media (max-width: 878px) {
+  .nav {
+    display: none !important;
+  }
+  .navbar-toggle {
+    display: block;
+  }
+}
+
+//SIDEBAR
+.sidebar-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 2000;
+  display: flex;
+}
+
+.sidebar-backdrop {
+  flex: 1;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.sidebar-menu {
+  position: relative;
+  width: 250px;
+  background-color: $light-gray;
+  padding: 1.5rem 1rem;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.25);
+  transform: translateX(0%); // hidden by default
+  transition: transform 0.3s ease-in-out;
+
+  &.open {
+    transform: translateX(0); // slide in
+  }
+}
+
+.close-sidebar-button {
+  background: none;
+  border: none;
+  font-size: 1.8rem;
+  cursor: pointer;
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  color: $dark-text-color;
+
+  &:hover {
+    color: $secondary-color;
+  }
+}
+
+.side-nav {
+  margin-top: 60px;
+  list-style: none;
+
+  li {
+    padding: 15px 0;
+
+    a {
+      color: $dark-text-color;
+      text-decoration: none;
+      font-size: 16px;
+      transition: 0.3s;
+
+      &:hover {
+        color: $secondary-color;
+      }
+
+      &.active {
+        font-weight: bold;
+        color: $secondary-color;
+      }
+    }
+
+    &:last-child {
+      .nav_link {
+        background-color: $dark-gray;
+        color: $light-text-color;
+        font-size: 14px;
+        font-weight: 400;
+        text-transform: none;
+        border-radius: 20px;
+        padding: 0;
+        display: flex;
+        align-items: center;
+
+        i {
+          background-color: $secondary-color;
+          display: inline-block;
+          width: 40px;
+          height: 40px;
+          text-align: center;
+          line-height: 40px;
+          margin-right: 10px;
+          border-radius: 50%;
+          color: $light-text-color;
+        }
+
+        &:hover {
+          color: $secondary-color;
+
+          i {
+            color: $light-text-color;
+          }
+        }
+      }
+    }
+  }
+}
