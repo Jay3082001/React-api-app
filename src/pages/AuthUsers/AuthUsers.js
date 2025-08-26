@@ -5,7 +5,7 @@ import { faUsers, faSpinner } from "@fortawesome/free-solid-svg-icons";
 import UserApproval from "../../Containers/UseraBindActions/UsersActionsApproval";
 import Input from "../../components/Form/input/Input";
 import Button from "../../components/Form/button/Button";
-import { NAME_REGEX, PASSWORD_REGEX } from "../../helper/Regex";
+import { NAME_REGEX, passwordRegex } from "../../helper/Regex";
 import Pagination from "../../components/pagination/Pagination";
 import Table from "../../components/table/Table";
 import DeleteModel from "../../components/confirmModel/DeleteModel";
@@ -85,7 +85,7 @@ const UserList = ({ users = [] }) => {
       !form.userName.trim() ||
       !NAME_REGEX.test(form.userName) ||
       !form.password.trim() ||
-      !PASSWORD_REGEX.test(form.password)
+      !passwordRegex.test(form.password)
     ) {
       return;
     }
@@ -189,8 +189,8 @@ const UserList = ({ users = [] }) => {
               placeholder="Password"
               value={form.password}
               onChange={handleChange}
-              pattern={PASSWORD_REGEX}
-              errorMessage="Password must have at least 1 uppercase, 1 lowercase, and 1 number"
+              pattern={passwordRegex}
+              errorMessage="Password must have at least 1 uppercase, 1 lowercase,1 Special Character and 1 number"
               validate={showErrors}
               variant="usersPage"
             />
