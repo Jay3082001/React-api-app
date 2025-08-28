@@ -1,4 +1,5 @@
 import { useEffect, useState, useMemo } from "react";
+import { useAccessMode } from "../../helper/AccessModeContext";
 import "./Books.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import BooksApproval from "../../Containers/BooksBindActions/BooksActionApproval";
@@ -11,6 +12,8 @@ import DeleteModel from "../../components/confirmModel/DeleteModel";
 import { Skeleton } from "@mui/material";
 
 const Books = ({ books = [], error, loadBooks, addBook, editBook, removeBook }) => {
+  const { read } = useAccessMode();
+  console.log('AccessMode read value:', read);
   const [form, setForm] = useState({
     id: null,
     title: "",
@@ -250,12 +253,12 @@ const Books = ({ books = [], error, loadBooks, addBook, editBook, removeBook }) 
         </div>
 
         <div style={{ display: "flex", alignItems: "flex-start", gap: "5px" }}>
-          <Button type="submit" disabled={loading}>
+          <Button type="submit" disabled={loading || read}>
             {form.id ? "Update" : "Add"} Book
             {loading && <FontAwesomeIcon icon="spinner" spin style={{ marginLeft: "8px" }} />}
           </Button>
           {form.id && (
-            <Button type="button" onClick={resetForm} variant="danger">
+            <Button type="button" onClick={resetForm} variant="danger" disabled={read}>
               Cancel
             </Button>
           )}
@@ -294,14 +297,17 @@ const Books = ({ books = [], error, loadBooks, addBook, editBook, removeBook }) 
                     {new Date(book.publishDate).toLocaleDateString()}
                   </small>
                 </div>
-                <div className="actions">
-                  <Button onClick={() => handleEdit(book)} variant="icon">
-                    <FontAwesomeIcon icon="pencil" />
-                  </Button>
-                  <Button onClick={() => handleDelete(book.id)} variant="icon">
-                    <FontAwesomeIcon icon="trash" />
-                  </Button>
-                </div>
+                {/* Hide actions section in read mode */}
+                {!read && (
+                  <div className="actions">
+                    <Button onClick={() => handleEdit(book)} variant="icon">
+                      <FontAwesomeIcon icon="pencil" />
+                    </Button>
+                    <Button onClick={() => handleDelete(book.id)} variant="icon">
+                      <FontAwesomeIcon icon="trash" />
+                    </Button>
+                  </div>
+                )}
               </li>
             ))}
       </ul>

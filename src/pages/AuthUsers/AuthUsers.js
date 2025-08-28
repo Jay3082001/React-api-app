@@ -1,4 +1,5 @@
 import { useEffect, useState, useMemo } from "react";
+import { useAccessMode } from "../../helper/AccessModeContext";
 import "../AuthUsers/AuthUsers.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUsers, faSpinner } from "@fortawesome/free-solid-svg-icons";
@@ -45,6 +46,7 @@ const fetchUsersAPI = async () => {
 };
 
 const UserList = ({ users = [] }) => {
+  const { read } = useAccessMode();
   const [usersState, setUsersState] = useState(users); // Local table state
   const [form, setForm] = useState({ id: null, username: "", password: "", read: false, write: false });
   const [uiState, setUiState] = useState({ search: "", page: 1 });
@@ -248,12 +250,12 @@ const UserList = ({ users = [] }) => {
         </div>
 
         <div className="change">
-          <Button type="submit" disabled={loading} variant="primary">
+          <Button type="submit" disabled={loading || read} variant="primary">
             {form.id ? "Update" : "Add"}
             {loading && <FontAwesomeIcon icon={faSpinner} spin style={{ marginLeft: "8px" }} />}
           </Button>
           {form.id && (
-            <Button type="button" onClick={resetForm} variant="danger">
+            <Button type="button" onClick={resetForm} variant="danger" disabled={read}>
               Cancel
             </Button>
           )}
@@ -269,8 +271,9 @@ const UserList = ({ users = [] }) => {
         data={paginated}
         page={uiState.page}
         pageSize={pageSize}
-        onEdit={handleEdit}
-        onDelete={handleDelete}
+        onEdit={read ? undefined : handleEdit}
+        onDelete={read ? undefined : handleDelete}
+        actions={!read}
         emptyMessage="No users found"
         loading={false}
       />

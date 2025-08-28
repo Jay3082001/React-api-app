@@ -1,4 +1,5 @@
 import { useEffect, useState, useMemo } from "react";
+import { useAccessMode } from "../../helper/AccessModeContext";
 import "../Users/Users.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUsers, faSpinner } from "@fortawesome/free-solid-svg-icons";
@@ -12,6 +13,7 @@ import DeleteModel from "../../components/confirmModel/DeleteModel";
 import PasswordInput from "../../components/Form/password/Password";
 
 const UserList = ({ users = [], error, loadUsers, addUser, editUser, removeUser }) => {
+  const { read } = useAccessMode();
   const [form, setForm] = useState({ id: null, userName: "", password: "" });
   const [uiState, setUiState] = useState({ search: "", page: 1 }); // merged search + page
   const [showErrors, setShowErrors] = useState(false);
@@ -178,12 +180,12 @@ const UserList = ({ users = [], error, loadUsers, addUser, editUser, removeUser 
         </div>
 
         <div className="change">
-          <Button type="submit" disabled={loading} variant="primary">
+          <Button type="submit" disabled={loading || read} variant="primary">
             {form.id ? "Update" : "Add"}
             {loading && <FontAwesomeIcon icon={faSpinner} spin style={{ marginLeft: "8px" }} />}
           </Button>
           {form.id && (
-            <Button type="button" onClick={resetForm} variant="danger">
+            <Button type="button" onClick={resetForm} variant="danger" disabled={read}>
               Cancel
             </Button>
           )}
@@ -199,8 +201,9 @@ const UserList = ({ users = [], error, loadUsers, addUser, editUser, removeUser 
         data={paginated}
         page={uiState.page}
         pageSize={pageSize}
-        onEdit={handleEdit}
-        onDelete={handleDelete}
+        onEdit={read ? undefined : handleEdit}
+        onDelete={read ? undefined : handleDelete}
+        actions={!read}
         emptyMessage="No users found"
         loading={initialLoading}
       />

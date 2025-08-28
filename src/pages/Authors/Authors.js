@@ -10,6 +10,7 @@ import Table from '../../components/table/Table';
 import DeleteModel from '../../components/confirmModel/DeleteModel';
 
 const AuthorList = ({ authors = [], loadAuthors, addAuthor, editAuthor, removeAuthor }) => {
+  const { read } = require('../../helper/AccessModeContext').useAccessMode();
   const [form, setForm] = useState({ id: null, idBook: '', firstName: '', lastName: '' });
   const [uiState, setUiState] = useState({ search: '', page: 1 }); // merged search + page
   const [showErrors, setShowErrors] = useState(false);
@@ -203,12 +204,12 @@ const AuthorList = ({ authors = [], loadAuthors, addAuthor, editAuthor, removeAu
         </div>
 
         <div style={{ display: 'flex', alignItems: 'flex-start', gap: '5px' }}>
-          <Button type="submit" className="submit-btn" disabled={loading}>
+          <Button type="submit" className="submit-btn" disabled={loading || read}>
             {form.id ? 'Update' : 'Add'}
             {loading && <FontAwesomeIcon icon="spinner" spin style={{ marginLeft: '8px' }} />}
           </Button>
           {form.id && (
-            <Button type="button" className="cancel-btn" onClick={resetForm} variant="danger">
+            <Button type="button" className="cancel-btn" onClick={resetForm} variant="danger" disabled={read}>
               Cancel
             </Button>
           )}
@@ -220,8 +221,9 @@ const AuthorList = ({ authors = [], loadAuthors, addAuthor, editAuthor, removeAu
         data={paginated}
         page={uiState.page}
         pageSize={pageSize}
-        onEdit={handleEdit}
-        onDelete={handleDelete}
+        onEdit={read ? undefined : handleEdit}
+        onDelete={read ? undefined : handleDelete}
+        actions={!read}
         emptyMessage="No authors found"
         columns={[
           { key: "idBook", label: "Book ID" },

@@ -1,4 +1,5 @@
 import { useEffect, useState, useMemo } from 'react';
+import { useAccessMode } from "../../helper/AccessModeContext";
 import './Activity.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import ActivityApproval from '../../Containers/ActivitybindActions/ActivityActionApproval';
@@ -20,6 +21,7 @@ const ActivityList = ({
   editActivity,
   removeActivity,
 }) => {
+    const { read } = useAccessMode();
   const [filter, setFilter] = useState({ filter: "all", search: "" }); // merged search & filter
   const [form, setForm] = useState({ id: null, title: '', dueDate: '', completed: false });
   const [page, setPage] = useState(1);
@@ -228,12 +230,12 @@ const ActivityList = ({
           </div>
         </div>
         <div className="change">
-          <Button type="submit" style={{ marginLeft: '10px' }} disabled={loading} variant="primary">
+          <Button type="submit" style={{ marginLeft: '10px' }} disabled={loading || read} variant="primary">
             {form.id ? 'Update' : 'Add'}
             {loading && (<FontAwesomeIcon icon="spinner" spin style={{ marginLeft: '8px' }} />)}
           </Button>
           {form.id && (
-            <Button type="button" onClick={resetForm} variant="danger">
+            <Button type="button" onClick={resetForm} variant="danger" disabled={read}>
               Cancel
             </Button>
           )}
@@ -250,8 +252,9 @@ const ActivityList = ({
         data={paginated}
         page={page}
         pageSize={pageSize}
-        onEdit={handleEdit}
-        onDelete={handleDelete}
+        onEdit={read ? undefined : handleEdit}
+        onDelete={read ? undefined : handleDelete}
+        actions={!read}
         emptyMessage="No activities found"
         loading={initialLoading}
       />

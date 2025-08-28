@@ -4,7 +4,9 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Skeleton } from '@mui/material';
 import "./TableStyle.scss";
 
-const Table = React.memo(({ columns, data, page, pageSize, onEdit, onDelete, emptyMessage, loading }) => {
+const Table = React.memo(({ columns, data, page, pageSize, onEdit, onDelete, emptyMessage, loading, actions }) => {
+  // Accept actions prop to control visibility of actions column/cell
+  const actionsVisible = typeof actions !== 'undefined' ? actions : true;
   return (
     <div className="activity_list">
       <table className="activity-table">
@@ -14,7 +16,7 @@ const Table = React.memo(({ columns, data, page, pageSize, onEdit, onDelete, emp
             {columns.map((col) => (
               <th key={col.key}>{col.label}</th>
             ))}
-            <th>Actions</th>
+            {actionsVisible && <th>Actions</th>}
           </tr>
         </thead>
 
@@ -38,29 +40,31 @@ const Table = React.memo(({ columns, data, page, pageSize, onEdit, onDelete, emp
                   </td>
                 ))}
 
-                <td className="actions">
-                  {loading ? (
-                    <Skeleton animation="wave" />
-                  ) : (
-                    <>
-                      {onEdit && (
-                        <Button onClick={() => onEdit(row)} variant="icon">
-                          <FontAwesomeIcon icon="pencil" />
-                        </Button>
-                      )}
-                      {onDelete && (
-                        <Button onClick={() => onDelete(row.id)} variant="icon">
-                          <FontAwesomeIcon icon="trash" />
-                        </Button>
-                      )}
-                    </>
-                  )}
-                </td>
+                {actionsVisible && (
+                  <td className="actions">
+                    {loading ? (
+                      <Skeleton animation="wave" />
+                    ) : (
+                      <>
+                        {onEdit && (
+                          <Button onClick={() => onEdit(row)} variant="icon">
+                            <FontAwesomeIcon icon="pencil" />
+                          </Button>
+                        )}
+                        {onDelete && (
+                          <Button onClick={() => onDelete(row.id)} variant="icon">
+                            <FontAwesomeIcon icon="trash" />
+                          </Button>
+                        )}
+                      </>
+                    )}
+                  </td>
+                )}
               </tr>
             ))
           ) : !loading ? (
             <tr>
-              <td colSpan={columns.length + 2} style={{ textAlign: "center", padding: "1rem" }}>
+              <td colSpan={columns.length + (actionsVisible ? 2 : 1)} style={{ textAlign: "center", padding: "1rem" }}>
                 {emptyMessage || "No records found"}
               </td>
             </tr>
@@ -72,7 +76,7 @@ const Table = React.memo(({ columns, data, page, pageSize, onEdit, onDelete, emp
                 {columns.map((col) => (
                   <td key={col.key}><Skeleton animation="wave" /></td>
                 ))}
-                <td><Skeleton animation="wave" /></td>
+                {actionsVisible && <td><Skeleton animation="wave" /></td>}
               </tr>
             ))
           )}

@@ -12,6 +12,12 @@
       "username": "ritenthumar",
       "email": "riten@gmail.com",
       "password": "Riten@12345"
+    },
+    {
+      "id": "b1ed",
+      "username": "tuleshgosai",
+      "password": "Tulesh@12345",
+      "read": true
     }
   ]
 }
