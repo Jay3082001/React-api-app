@@ -10,8 +10,9 @@ import Pagination from "../../components/pagination/Pagination";
 import Table from "../../components/table/Table";
 import DeleteModel from "../../components/confirmModel/DeleteModel";
 import PasswordInput from "../../components/Form/password/Password";
+import Checkbox from "../../components/Form/checkbox/CheckBox";
 
-// API functions
+// API functions 
 const addUserAPI = async (user) => {
   const res = await fetch("http://localhost:7000/users", {
     method: "POST",
@@ -37,9 +38,15 @@ const removeUserAPI = async (id) => {
   if (!res.ok) throw new Error("Failed to delete user");
 };
 
+const fetchUsersAPI = async () => {
+  const res = await fetch("http://localhost:7000/users");
+  if (!res.ok) throw new Error("Failed to fetch users");
+  return await res.json();
+};
+
 const UserList = ({ users = [] }) => {
   const [usersState, setUsersState] = useState(users); // Local table state
-  const [form, setForm] = useState({ id: null, userName: "", password: "" });
+  const [form, setForm] = useState({ id: null, username: "", password: "", read: false, write: false });
   const [uiState, setUiState] = useState({ search: "", page: 1 });
   const [showErrors, setShowErrors] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -66,13 +73,16 @@ const UserList = ({ users = [] }) => {
 
   // Form change
   const handleChange = (e) => {
-    const { name, value } = e.target;
-    setForm((prev) => ({ ...prev, [name]: value }));
+    const { name, type, value, checked } = e.target;
+    setForm((prev) => ({
+      ...prev,
+      [name]: type === "checkbox" ? checked : value,
+    }));
   };
 
   // Reset form
   const resetForm = () => {
-    setForm({ id: null, userName: "", password: "" });
+    setForm({ id: null, username: "", password: "", read: false, write: false });
     setShowErrors(false);
   };
 
@@ -82,15 +92,21 @@ const UserList = ({ users = [] }) => {
     setShowErrors(true);
 
     if (
-      !form.userName.trim() ||
-      !NAME_REGEX.test(form.userName) ||
+      !form.username.trim() ||
+      !NAME_REGEX.test(form.username) ||
       !form.password.trim() ||
       !passwordRegex.test(form.password)
     ) {
       return;
     }
 
-    const payload = { id: form.id || Date.now(), userName: form.userName, password: form.password };
+    const payload = {
+      id: form.id || Date.now(),
+      username: form.username,
+      password: form.password,
+      read: form.read,
+      write: form.write,
+    };
 
     setLoading(true);
     try {
@@ -136,6 +152,20 @@ const UserList = ({ users = [] }) => {
     setDeleteState({ target: null, deleting: false });
   };
 
+  // Fetch users on mount
+  useEffect(() => {
+    const loadUsers = async () => {
+      try {
+        const data = await fetchUsersAPI();
+        setUsersState(data);
+      } catch (err) {
+        // Optionally handle error
+        setUsersState([]);
+      }
+    };
+    loadUsers();
+  }, []);
+
   return (
     <div className="user-container">
       <h2>
@@ -174,9 +204,9 @@ const UserList = ({ users = [] }) => {
           <div className="input-group">
             <Input
               type="text"
-              name="userName"
+              name="username" // <-- changed
               placeholder="Username"
-              value={form.userName}
+              value={form.username}
               onChange={handleChange}
               pattern={NAME_REGEX}
               errorMessage="Username must contain only letters and numbers"
@@ -194,6 +224,26 @@ const UserList = ({ users = [] }) => {
               validate={showErrors}
               variant="usersPage"
             />
+          </div>
+          <div className="input-group" style={{ display: "flex", alignItems: "center", justifyContent: "center", width: "150px" }}>
+            <label>
+              <Checkbox
+                type="checkbox"
+                name="read"
+                label="Read"
+                checked={form.read}
+                onChange={e => setForm(prev => ({ ...prev, read: e.target.checked }))}
+              />
+            </label>
+            <label style={{ marginLeft: "16px" }}>
+              <Checkbox
+                type="checkbox"
+                name="write"
+                label="Write"
+                checked={form.write}
+                onChange={e => setForm(prev => ({ ...prev, write: e.target.checked }))}
+              />
+            </label>
           </div>
         </div>
 
@@ -213,7 +263,7 @@ const UserList = ({ users = [] }) => {
       {/* TABLE */}
       <Table
         columns={[
-          { key: "userName", label: "Username" },
+          { key: "username", label: "Username" },
           { key: "password", label: "Password" },
         ]}
         data={paginated}

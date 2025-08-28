@@ -15,6 +15,7 @@ const PasswordInput = ({
   const [showPassword, setShowPassword] = useState(false);
 
   return (
+    <>
     <Wrapper>
       <StyledInput
         type={showPassword ? "text" : "password"}
@@ -23,8 +24,8 @@ const PasswordInput = ({
         value={value}
         onChange={onChange}
         pattern={pattern}
-        errorMessage={errorMessage}
-        validate={validate}
+        // errorMessage={errorMessage}
+        // validate={validate}
         variant={variant} 
       />
       <FontAwesomeIcon
@@ -37,9 +38,15 @@ const PasswordInput = ({
           transform: "translateY(-50%)",
           cursor: "pointer",
           color: "#666", 
-        }}
+        }} 
       />
     </Wrapper>
+    {validate && errorMessage && (
+        <div style={{ color: "red", fontSize: "0.8rem", marginTop: "4px" }}>
+          {errorMessage}
+        </div>
+      )}
+      </>
   );
 };
 

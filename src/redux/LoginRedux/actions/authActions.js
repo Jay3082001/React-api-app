@@ -17,8 +17,10 @@ export const signUpAction = (userData) => {
 };
 
 // Logout
-export const logoutAction = () => { 
-  const path = `${AUTH_PREFIX}`; 
-  const responseType = 'LOGOUT';
-  return axiosCall('post', path, responseType, null, {}, 'logout');
+export const logoutAction = () => {
+  // Only clear token locally, do not call API that creates new user/ID
+  return (dispatch) => {
+    localStorage.removeItem('U_TOKENS');
+    dispatch({ type: 'LOGOUT', updatePayload: null });
+  };
 };

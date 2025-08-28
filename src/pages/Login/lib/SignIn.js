@@ -29,7 +29,7 @@ const SignIn = ({ signInAction, AuthResponse, AuthError }) => {
     }
     if (!password.trim() || !passwordRegex.test(password)) {
       isValid = false;
-    }
+    } 
 
     if (!isValid) return;
 

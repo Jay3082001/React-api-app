@@ -10,9 +10,10 @@ export const StyledInput = styled(Input)`
         props.variant === "usersPage" &&
         css`
             padding: 0.7rem 1rem; 
+            padding-right: 2.5rem; 
             border: 1px solid #ccc;
             border-radius: 8px;
-            font-size: 0.95rem;
+            font-size: 0.95rem; 
             width: 100%;
             transition: 0.2s; 
     `}
